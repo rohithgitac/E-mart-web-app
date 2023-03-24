@@ -49,13 +49,14 @@ const LoginScreen = () => {
           <FormControl type='password' placeholder='enter your password ' value={password}
           onChange={(e) => setPassword(e.target.value)}></FormControl>
         </FormGroup>
-
-        <Button type='submit' variant='primary'>Sign In</Button> 
+        <div className='d-flex justify-content-end' >
+        <Button type='submit'variant='outline-success'className='mt-2 my-button-addtocart'>Sign In</Button> 
+        </div>
       </Form>
 
       <Row className='py-3'>
         <Col>
-        New to Emart ?<Link to={redirect ? `/register?redirect=${redirect}`: '/register'}>Register</Link></Col>
+        New to Emart ?<Link to={redirect ? `/register?redirect=${redirect}`: '/register'}> Register</Link></Col>
       </Row>
     </FormContainer>
   )

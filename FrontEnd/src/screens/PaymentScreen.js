@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {  useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,6 +11,8 @@ import {
 import FormContainer from "../components/FormContainer";
 import { savePaymentMethod } from "../actions/cartActions";
 import Checkoutsteps from "../components/Checkoutsteps";
+import { ORDER_CREATE_RESET } from "../constants/orderConstant";
+
 
 const PaymentScreen = () => {
   const navigate = useNavigate();
@@ -27,6 +29,10 @@ const PaymentScreen = () => {
 
 
   const dispatch = useDispatch()
+
+  useEffect(()=>{
+    dispatch({type:ORDER_CREATE_RESET})
+  },[dispatch])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -59,9 +65,11 @@ const PaymentScreen = () => {
             </FormCheck>
         </Col>
         </FormGroup>
-        <Button type="submit" className="mt-1" variant="primary">
+        <div className='d-flex justify-content-end' >
+        <Button type="submit" variant='outline-success'className='mt-2 my-button-addtocart'>
           Continue
         </Button>
+        </div>
       </Form>
     </FormContainer></>
   );

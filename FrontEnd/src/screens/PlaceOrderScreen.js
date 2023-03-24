@@ -4,7 +4,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Checkoutsteps from '../components/Checkoutsteps'
 import Message from '../components/Message'
-import { createOrder } from '../actions/orderActions'
+import { createOrder,getOrderDetails } from '../actions/orderActions'
+import { ORDER_CREATE_RESET, ORDER_DETAILS_RESET } from '../constants/orderConstant'
+import { removeAllFromCart } from '../actions/cartActions'
 
 const PlaceOrderScreen = () => {
 
@@ -26,13 +28,17 @@ const PlaceOrderScreen = () => {
     cart.totalPrice =(Number(cart.itemsPrice) +Number(cart.shippingPrice )+ Number(cart.taxPrice)).toFixed(2)
 
     const orderCreate = useSelector(state => state.orderCreate)
-    const {order,success,error} = orderCreate
+    const {orderCreatedOne,success,error} = orderCreate
 
     useEffect(()=>{
         if(success){
-            navigate(`/order/${order._id}`)
-        }
-    },[navigate,success])
+            dispatch(getOrderDetails(orderCreatedOne._id))
+            navigate(`/order/${orderCreatedOne._id}`)
+        }else{
+            dispatch({type:ORDER_CREATE_RESET})
+            dispatch({type:ORDER_DETAILS_RESET})
+        } 
+    },[navigate,dispatch,success,orderCreatedOne])
 
     const placeOrderHandler = () => {
        dispatch(createOrder({
@@ -44,6 +50,9 @@ const PlaceOrderScreen = () => {
         taxPrice : cart.taxPrice,
         totalPrice : cart.totalPrice
        }))
+       dispatch(removeAllFromCart())
+       
+        
          
     }
   return (
@@ -53,21 +62,14 @@ const PlaceOrderScreen = () => {
                 <ListGroup variant= 'flush'>
                     <ListGroupItem>
                         <h2>Shipping Details</h2>
-                        <p>
-                            <strong>Address : </strong>
-                            {cart.shippingAddress.address}
-                        </p>
-                        <p>
-                            <strong>City : </strong>
-                            {cart.shippingAddress.city}
-                        </p>
-                        <p>
-                            <strong>Postal code : </strong>
-                            {cart.shippingAddress.postalCode}
-                        </p>
-                        <p>
-                            <strong>Phone : </strong>
-                            {cart.shippingAddress.phone}
+                        <p><Row>
+                            <Col md={2}>
+                            <strong>Address : </strong></Col>
+                            <Col md={10}>
+                            {cart.shippingAddress.address}<br/>
+                            {cart.shippingAddress.city}<br/>
+                            {cart.shippingAddress.postalCode}<br/>
+                            {cart.shippingAddress.phone}</Col></Row>
                         </p>
                     </ListGroupItem>
 
@@ -139,8 +141,10 @@ const PlaceOrderScreen = () => {
                             <Message variant='danger'>{error}</Message> </ListGroupItem>}
                        
                         <ListGroupItem>
-                            <Button type = 'button' className='btn-block'
+                        <div className='d-flex justify-content-center' >
+                            <Button type = 'button' variant='outline-success'className='mt-2 my-button-addtocart'
                             disabled={cart.cartItems === 0} onClick={placeOrderHandler}>Place Order</Button>
+                            </div>
                         </ListGroupItem>
                     </ListGroup>
                 </Card>

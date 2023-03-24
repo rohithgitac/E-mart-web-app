@@ -2,7 +2,9 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Nav, Navbar, Container, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import SearchBox from "./SearchBox";
 import { logout } from "../actions/userActions";
+
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -15,17 +17,18 @@ export const Header = () => {
     dispatch(logout());
   };
   return (
-    <header>
-      <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
+    <header >
+      <Navbar  variant="dark" expand="md"  collapseOnSelect>
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>Emart</Navbar.Brand>
+            <Navbar.Brand className="brand">Emart</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ml-auto">
+          <Navbar.Collapse className='justify-content-between' id="basic-navbar-nav">
+         
+            <Nav className='justify-content-between' >
               <LinkContainer to="/cart">
-                <Nav.Link>
+                <Nav.Link className="mx-3">
                   <i className="fas fa-shopping-cart"></i>Cart
                 </Nav.Link>
               </LinkContainer>
@@ -60,6 +63,7 @@ export const Header = () => {
 
               )}
             </Nav>
+            <SearchBox/>
           </Navbar.Collapse>
         </Container>
       </Navbar>

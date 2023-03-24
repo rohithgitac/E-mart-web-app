@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Row,
@@ -14,11 +14,17 @@ import {
 import { LinkContainer } from "react-router-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import Paginate from '../components/Paginate'
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import { myOrdersAction } from "../actions/orderActions";
+import { ORDER_CREATE_RESET, ORDER_DETAILS_RESET } from "../constants/orderConstant";
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstant";
 
 const ProfileScreen = () => {
   const navigate = useNavigate();
+  const params = useParams()
+
+  const pageNumber= params.pageNumber || 1
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -33,23 +39,30 @@ const ProfileScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const myorders = useSelector((state) => state.myorders);
-  const { loading: loadingOrders, error: errorOrders, orders } = myorders;
+  const { loading: loadingOrders, error: errorOrders, orders,orderPage,orderPages } = myorders;
+  const page=orderPage
+  const pages=orderPages
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const { success } = userUpdateProfile;
 
   useEffect(() => {
+    dispatch({type:ORDER_CREATE_RESET})
+    dispatch({type:ORDER_DETAILS_RESET})
+    dispatch(myOrdersAction(pageNumber));
     if (!userInfo) {
       navigate("/login");
-    } else {
-      if (!user.name) {
+    }
+    else {
+      if (!user || !user.name ||success) {
+        dispatch({type : USER_UPDATE_PROFILE_RESET})
         dispatch(getUserDetails("profile"));
-        dispatch(myOrdersAction());
+        
       } else {
         setName(user.name);
         setEmail(user.email);
       }
     }
-  }, [dispatch, navigate, userInfo, user]);
+  }, [dispatch, navigate, userInfo, user,success,pageNumber]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -58,8 +71,9 @@ const ProfileScreen = () => {
     } else {
       dispatch(updateUserProfile({ id: user._id, name, email, password }));
     }
-  };
+  }
   return (
+    <>
     <Row>
       <Col md={3}>
         <h2>User profile</h2>
@@ -120,6 +134,7 @@ const ProfileScreen = () => {
         ) : errorOrders ? (
           <Message variant="danger">{errorOrders}</Message>
         ) : 
+          <>
           <Table striped bordered hover responsive className="table-sm">
             <thead>
               <tr>
@@ -164,9 +179,14 @@ const ProfileScreen = () => {
               )}
             </tbody>
           </Table>
+          <div className="mt-2">
+          <Paginate page={page} pages={pages} isOrder={true}/>
+          </div>
+          </>
         }
       </Col>
     </Row>
+    </>
   );
 };
 

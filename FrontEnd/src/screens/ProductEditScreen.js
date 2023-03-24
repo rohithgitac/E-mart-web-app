@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import {Link,useNavigate,useParams} from 'react-router-dom'
 import { useDispatch,useSelector } from 'react-redux'
 import {Button, Form, FormGroup, FormLabel, FormControl } from 'react-bootstrap'
+import axios from 'axios'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { listProductDetails ,updateProducts} from '../actions/productActions'
@@ -21,6 +22,7 @@ const ProductEditScreen = () => {
    const [category,setCategory] = useState('')
    const [description,setDescription] = useState('')
    const [countInStock,setCountInStock] = useState(0)
+   const [uploading,setUploading] = useState(false)
 
    const productDetails = useSelector(state => state.productDetails)
    const {loading,error,product} = productDetails
@@ -49,6 +51,29 @@ const ProductEditScreen = () => {
           }
     }   
    }, [dispatch,product,productId,navigate,successUpdate])
+
+   const uploadFileHandler = async(e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image',file)
+    setUploading(true)
+
+    try {
+      const config = {
+        headers:{
+          'Content-Type':'multipart/form-data'
+        }
+      }
+
+      const {data} = await axios.post('/api/upload',formData,config)
+
+      setImage(data)
+      setUploading(false)
+    } catch (error) {
+      console.error(error)
+      setUploading(false)
+    }
+   }
    
    const submitHandler = (e) =>{
     e.preventDefault()
@@ -68,7 +93,7 @@ const ProductEditScreen = () => {
     <>
     <Link to='/admin/productslist' className='btn btn-light my-2'> &lt;&lt;Back </Link>
     <FormContainer>
-      <h1>Edit Product</h1>
+    <h1>Edit Product</h1>
     {loadingUpdate && <Loader/>}
     {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}  
     {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message>
@@ -91,6 +116,14 @@ const ProductEditScreen = () => {
           <FormLabel>Image</FormLabel>
           <FormControl type='text' placeholder='enter image Url' value={image}
           onChange={(e) => setImage(e.target.value)}></FormControl>
+          <FormControl
+          type='file' 
+          id='image-file' 
+          label='Choose file' 
+          custom 
+          onChange={uploadFileHandler}>
+          </FormControl>
+           {uploading && <Loader/>}
         </FormGroup>
 
         <FormGroup controlId='brand'>

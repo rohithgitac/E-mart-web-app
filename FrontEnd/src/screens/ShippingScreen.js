@@ -75,10 +75,11 @@ const ShippingScreen = () => {
             onChange={(e) => setPhone(e.target.value)}
           ></FormControl>
         </FormGroup>
-
-        <Button type="submit" className="mt-1" variant="primary">
+        <div className='d-flex justify-content-end' >
+        <Button type="submit" variant='outline-success'className='mt-2 my-button-addtocart'>
           Continue
         </Button>
+        </div>
       </Form>
     </FormContainer></>
   );

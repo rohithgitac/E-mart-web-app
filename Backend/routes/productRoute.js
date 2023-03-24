@@ -1,6 +1,12 @@
 import express from "express";
 const router = express.Router()
-import { getProducts,getProductById ,deleteProduct, updateProduct, createProduct} from "../controllers/productController.js";
+import { getProducts,
+    getProductById ,
+    deleteProduct,
+    updateProduct,
+    createProduct,
+    createProductReview,
+    getTopProducts} from "../controllers/productController.js";
 import { protect , admin} from "../middleware/authMiddleware.js";
 
 
@@ -8,6 +14,12 @@ import { protect , admin} from "../middleware/authMiddleware.js";
 // GET api/products
 // public access
 router.route('/').get(getProducts).post(protect,admin,createProduct)
+
+
+router.route('/top').get(getTopProducts)
+
+
+router.route('/:id/reviews').post(protect,createProductReview)
 // Fetch a single product by its id
 // GET api/products/:id
 // public access

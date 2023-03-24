@@ -89,7 +89,9 @@ const CartScreen = () => {
         )
       }
       {cartItems.length > 0 &&
-      <Button className='me-auto' type='button' onClick={removeAllfunc}>Remove all</Button>
+      <div className='d-flex justify-content-end' >
+        <Button type='button' variant='outline-danger' onClick={removeAllfunc}>Remove all</Button>
+      </div>
       }
     </Col>
     <Col md={4}>
@@ -103,7 +105,7 @@ const CartScreen = () => {
            {cartItems.reduce((acc,item) => acc + (item.qty * item.price) ,0).toFixed(2)} /-</h2>
           </ListGroupItem>
           <ListGroupItem className='py-2 text-center'>
-            <Button type='button' className='btn-block' disabled={cartItems.length ===0 }
+            <Button type='button'variant='outline-success'className='my-button-addtocart' disabled={cartItems.length ===0 }
             onClick ={checkoutHandler}>
               Proceed to checkout
             </Button>

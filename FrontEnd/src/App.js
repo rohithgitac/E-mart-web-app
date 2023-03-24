@@ -17,6 +17,7 @@ import UserListScreen from "./screens/UserListScreen";
 import AdminUserEditScreen from "./screens/AdminUserEditScreen";
 import ProductListScreen from "./screens/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
+import OrderListScreen from "./screens/OrderListScreen";
 
 
 function App() {
@@ -27,9 +28,13 @@ function App() {
         <Container>
         <Routes>
         <Route path="/" element={<Homescreen/>} exact/>
+        <Route path="/page/:pageNumber" element={<Homescreen/>} exact />
+        <Route path="/search/:keyword/page/:pageNumber" element={<Homescreen/>} exact />
+        <Route path="/search/:keyword" element={<Homescreen/>} exact/>
         <Route path="/login" element={<LoginScreen/>} />
         <Route path="/register" element={<RegisterScreen/>} />
-        <Route path="/profile" element={<ProfileScreen/>} />
+        <Route path="/profile" exact element={<ProfileScreen/>} />
+        <Route path="/profile/:pageNumber" exact element={<ProfileScreen/>} />
         <Route path='/product/:id' element={<Productscreen/>}></Route>
         <Route path='/cart/:id?' element={<CartScreen/>}></Route>
         <Route path='/shipping' element={<ShippingScreen/>}></Route>
@@ -38,10 +43,11 @@ function App() {
         <Route path='/order/:id' element={<OrderScreen/>}></Route>
         <Route path='/admin/userslist' element={<UserListScreen/>}></Route>
         <Route path='/admin/user/:id/edit' element={<AdminUserEditScreen/>}></Route>
-        <Route path='/admin/productslist' element={<ProductListScreen/>}></Route>
+        <Route path='/admin/productslist' exact element={<ProductListScreen/>}></Route>
+        <Route path='/admin/productslist/:pageNumber' exact element={<ProductListScreen/>}></Route>
         <Route path='/admin/product/:id/edit' element={<ProductEditScreen/>}></Route>
-        
-        
+        <Route path='/admin/orderslist' exact element={<OrderListScreen/>}></Route>
+        <Route path='/admin/orderslist/:pageNumber' exact element={<OrderListScreen/>}></Route>
 
 
         </Routes>
