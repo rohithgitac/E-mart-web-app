@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import {Link,useNavigate,useLocation,useParams} from 'react-router-dom'
+import {Link,useNavigate,useParams} from 'react-router-dom'
 import { useDispatch,useSelector } from 'react-redux'
 import {Button, Form, FormGroup, FormLabel, FormControl, FormCheck } from 'react-bootstrap'
 import Message from '../components/Message'

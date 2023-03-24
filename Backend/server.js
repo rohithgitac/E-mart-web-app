@@ -23,11 +23,6 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 
-app.get('/',(req,res)=>{
-    res.send('api running...')
-    
-})
-
 app.use('/api/products',productRoute)
 app.use('/api/users',userRoute)
 app.use('/api/orders',orderRoute)
@@ -38,6 +33,17 @@ res.send(process.env.PAYPAL_CLIENT_ID))
 
 const __dirname = path.resolve()
 app.use('/Uploads',express.static(path.join(__dirname,'/Uploads')))
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static(path.join(__dirname,'/FrontEnd/build')))
+    app.get('*',(req,res) => res.sendFile(path.resolve(__dirname, 'FrontEnd','build','index.html')))
+}
+else{
+    app.get('/',(req,res)=>{
+        res.send('api running...')
+        
+    })
+}
 
 app.use(notFound)
 
