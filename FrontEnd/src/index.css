@@ -35,6 +35,7 @@ margin-right: 2px;
 .carouselfull {
   border: solid 3px #4bbf73;
   background-color:black;
+  height: 380px;
 }
 
 .carousel-item-next,
@@ -47,17 +48,22 @@ margin-right: 2px;
   top: 0;
   left: 0;
   right: 0;
+  padding-bottom: 20px;
 }
 .carousel-caption h2 {
   color: #fff;
+  margin-bottom: 20px;
+  padding-bottom: 30px;
 }
 .carousel img {
   height: 310px;
-  padding: 40px;
-  margin-top: 18px;
+  padding: 50px;
   margin-left: auto;
   margin-right: auto;
   border-radius: 50%;
+}
+.carousel-productimg{
+  margin-top: 40px;
 }
 
 .carousel a {
