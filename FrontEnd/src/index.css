@@ -11,6 +11,16 @@ header {
   font-size: xx-large;
 }
 
+.disabled-button{
+  background-color: rgb(255, 178, 178);
+}
+.double-arrow{
+ margin-left: 0;
+ margin-right: 2px;
+ margin-top: auto;
+ margin-bottom: auto;
+
+}
 .cardproducts{
 margin-left: 2px;
 margin-right: 2px;

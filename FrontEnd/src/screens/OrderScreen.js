@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import {PayPalButton} from 'react-paypal-button-v2'
-import { ListGroup, ListGroupItem , Row,Col, Image, Card} from 'react-bootstrap'
+import { ListGroup, ListGroupItem , Row,Col, Image, Card, Container} from 'react-bootstrap'
 import { Link, useNavigate,useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
@@ -84,6 +84,11 @@ const OrderScreen = () => {
     loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message>:
      <>
         <h1>Order {order._id}</h1>
+        {order.paymentMethod ==='Cash on delivery'? (
+            <Container>
+            <h3 >Your order placed successfully..!!</h3>
+            <p >If you want to change your payment method to online use paypal.. </p></Container>
+        ):''}
         <Row className='mt-3'>
         <Col md={8}>
             <ListGroup variant= 'flush'>

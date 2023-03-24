@@ -37,7 +37,9 @@ const PaymentScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(savePaymentMethod(paymentMethod))
+    
     navigate('/placeorder')
+   
   }
   return (
      <> <Checkoutsteps step1 step2 step3/>
@@ -66,7 +68,8 @@ const PaymentScreen = () => {
         </Col>
         </FormGroup>
         <div className='d-flex justify-content-end' >
-        <Button type="submit" variant='outline-success'className='mt-2 my-button-addtocart'>
+        <Button type="submit" variant='outline-success'className='mt-2 my-button-addtocart'
+         disabled={!paymentMethod}>
           Continue
         </Button>
         </div>

@@ -141,10 +141,17 @@ const PlaceOrderScreen = () => {
                             <Message variant='danger'>{error}</Message> </ListGroupItem>}
                        
                         <ListGroupItem>
-                        <div className='d-flex justify-content-center' >
+                        {cart.paymentMethod ==='Paypal'
+                        ?
+                        (<div className='d-flex justify-content-center' >
                             <Button type = 'button' variant='outline-success'className='mt-2 my-button-addtocart'
                             disabled={cart.cartItems === 0} onClick={placeOrderHandler}>Place Order</Button>
-                            </div>
+                            </div>)
+                        :
+                        (<div className='d-flex justify-content-center' >
+                            <Button type = 'button' variant='outline-success'className='mt-2 my-button-addtocart'
+                            disabled={cart.cartItems === 0} onClick={placeOrderHandler}>Confirm Order</Button>
+                        </div>)}
                         </ListGroupItem>
                     </ListGroup>
                 </Card>
