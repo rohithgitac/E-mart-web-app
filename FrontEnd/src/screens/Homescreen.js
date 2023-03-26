@@ -30,9 +30,11 @@ const Homescreen = () => {
   return (
     <>
     <Meta />
-    {!keyword ? <ProductCarousel/> :
-     (<Link to={'/'} className='btn'> &lt;&lt;Go back </Link>)}
-    <h2 className='mt-3'> Latest products</h2>
+    {!keyword ?<> <ProductCarousel/> 
+    <h2 className='mt-3'> Latest products</h2></>
+    :
+     (<><Link to={'/'} className='btn'> &lt;&lt;Go back </Link>
+      <h3 className='mt-2'>Search results for '{keyword}'</h3></>)}
     {loading ? <Loader/>:error? <Message variant='danger'>{error}</Message>:
     <>
       <Row>
