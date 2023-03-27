@@ -10,12 +10,12 @@
     {
       "src": "kartimage.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "256x256"
     },
     {
-      "src": "kartimage.png",
+      "src": "kartimagec.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "256x256"
     }
   ],
   "start_url": ".",
